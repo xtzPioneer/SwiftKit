@@ -43,7 +43,7 @@ import Combine
     /// - Parameter enclosingInstance: 封闭实例
     private mutating func bindSubscription<OuterSelf: ObservableObject>(_ enclosingInstance: OuterSelf) where OuterSelf.ObjectWillChangePublisher == ObservableObjectPublisher {
         subscription = wrappedValue.objectWillChange.sink(receiveValue: { [weak enclosingInstance] _ in
-            (enclosingInstance?.objectWillChange)?.send()
+            DispatchQueue.main.async { (enclosingInstance?.objectWillChange)?.send() }
         })
     }
     
